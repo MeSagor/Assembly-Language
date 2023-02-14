@@ -19,7 +19,7 @@ main proc
 	             mov  ah, 1
 	             int  21h
 	             cmp  al, 13
-	             je   now_check
+	             je   break
 	             mov  string[si], al
 	             inc  si
 	             jmp  Repeat
@@ -28,36 +28,37 @@ main proc
 	;mov dl, first_capital
 	;int 21h
     
-	now_check:   
+	break:   
 	             call new_line
 	             mov  si, offset string
 	Repeat1:     
 	             mov  bl, [si]
-	             cmp  bl, 13
+	             cmp  bl, '$'
 	             je   last_verdict
 	             inc  si
    	 
-	             cmp  bl, 41h
+	             cmp  bl, 'A'
 	             jge  inner
 	             jmp  Repeat1
-	inner:       
-	             cmp  bl, 5ah
+	    inner:       
+	             cmp  bl, 'Z'
 	             jle  found
 	             jmp  Repeat1
-	found:       
+	        found:       
 	             cmp  bl, first_capital
 	             jl   do
 	             jmp  once
-	do:          
-	             mov  first_capital, bl
-	             mov  flag, 1
-	once:        
-	             cmp  bl, last_capital
-	             jg   do1
-	             jmp  Repeat1
-	do1:         
-	             mov  last_capital, bl
-	             mov  flag, 1
+	            do:          
+	                mov  first_capital, bl
+	                mov  flag, 1
+	            once:        
+	                cmp  bl, last_capital
+	                jg   do1
+	                jmp  Repeat1
+	                    do1:         
+	                        mov  last_capital, bl
+	                        mov  flag, 1
+	                        jmp  Repeat1
     
 	last_verdict:
 	             cmp  flag, 1
