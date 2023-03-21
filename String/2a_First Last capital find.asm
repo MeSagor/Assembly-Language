@@ -2,17 +2,22 @@
 .stack 100h
 .data
 	string        db 100 dup('$')
+	inmsg db "Enter string: $"
 	first_capital db 'Z'
 	last_capital  db 'A'
 	msg1          db "No Capitals$"
-	msg2          db "First Capital:$"
-	msg3          db "Last Capital:$"
+	msg2          db "First Capital: $"
+	msg3          db "Last Capital: $"
 	flag          db 0
  
 .code
 main proc
 	             mov  ax, @data
 	             mov  ds, ax
+	             
+	             lea dx, inmsg
+                 mov ah, 9
+                 int 21h
     
 	             mov  si, offset string
 	Repeat:      

@@ -3,6 +3,8 @@
 .data
     string0 db 100 dup('$')
     string1 db 100 dup('$')
+    inmsg0 db "1st string: $"
+    inmsg1 db "2nd string: $"
     msg0 db "Found$"
     msg1 db "Not Found$"
 
@@ -10,6 +12,10 @@
 main proc
     mov ax, @data
     mov ds, ax
+    
+    lea dx, inmsg0
+    mov ah, 9
+    int 21h
     
     lea si, string0
     input0:
@@ -23,6 +29,10 @@ main proc
      
     break0:
         call new_line
+    
+    lea dx, inmsg1
+    mov ah, 9
+    int 21h
     
     lea si, string1
     input1:

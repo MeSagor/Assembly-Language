@@ -2,6 +2,10 @@
 .stack 100h
 .data
     string db 100 dup('$')
+    
+    inmsg db "Enter string: $"
+    outmsg db "Longest sequence in alphabetic order: $"
+    
     l dw ?
     r dw ?
     fl dw ?
@@ -15,6 +19,10 @@
 main proc
     mov ax, @data
     mov ds, ax
+    
+    lea dx, inmsg
+    mov ah, 9
+    int 21h
     
     lea si, string
     input:
@@ -78,6 +86,10 @@ main proc
                 jmp worker
     
     output:
+        lea dx, outmsg
+        mov ah, 9
+        int 21h
+    
         mov si, fl
         print:
             mov dl, [si]
